@@ -1,0 +1,71 @@
+﻿@using DiceRoll.ViewModels
+@inherits AttackBase
+
+
+<div class="mb-3 col-6 border border-dark rounded">
+    <div class="m-3">
+        <label for="hitCapInput" class="form-label">Hit cap</label>
+        <input type="number" class="form-control" id="hitCapInput" @bind="Attack.HitCap">
+    </div>
+    <div class="m-3 row">
+        <div class="col-4 me-3 form-check form-switch">
+            <input class="form-check-input" type="checkbox" role="switch" id="hitRerollInput" @bind="HasHitReroll">
+            <label class="form-check-label" for="hitRerollInput">Hit reroll</label>
+        </div>
+        @if (HasHitReroll)
+        {
+            <div class="col-4 me-3">
+                <InputRadioGroup @bind-Value="Attack.HitReroll.RerollType">
+                    @foreach (var rerollType in (DataModels.RerollType[])Enum.GetValues(typeof(DataModels.RerollType)))
+                        {
+                        <div class="form-check">
+                            <InputRadio Name="HitRerollType" Value="rerollType" class="form-check-input" id="@("HitRerollType" + rerollType.ToString())" />
+                            <label class="form-check-label" for="@("HitRerollType" + rerollType.ToString())">Single fail</label>
+                        </div>
+                        }
+                </InputRadioGroup>
+            </div>
+            @if (Attack.HitReroll?.RerollType == DataModels.RerollType.SpecificValue)
+            {
+                <div class="col-4 me-3 form-check form-switch">
+                    <label for="hitRerollSpecificValueInput" class="form-label">Reroll value</label>
+                    <input type="number" class="form-control" id="hitRerollSpecificValueInput" @bind="Attack.HitReroll.Value">
+                </div>
+            }
+        }
+    </div>
+    <div class="m-3">
+        <label for="woundCapInput" class="form-label">Wound cap</label>
+        <input type="number" class="form-control" id="woundCapInput" @bind="Attack.WoundCap">
+    </div>
+    <div class="m-3 row">
+        <div class="col-4 me-3 form-check form-switch">
+            <input class="form-check-input" type="checkbox" role="switch" id="woundRerollInput" @bind="HasWoundReroll">
+            <label class="form-check-label" for="woundRerollInput">Wound reroll</label>
+        </div>
+        @if (HasWoundReroll)
+        {
+            <div class="col-4 me-3">
+                <InputRadioGroup @bind-Value="Attack.WoundReroll.RerollType">
+                    @foreach (var rerollType in (DataModels.RerollType[])Enum.GetValues(typeof(DataModels.RerollType)))
+                        {
+                        <div class="form-check">
+                            <InputRadio Name="HitRerollType" Value="rerollType" class="form-check-input" id="@("WoundRerollType" + rerollType.ToString())" />
+                            <label class="form-check-label" for="@("WoundRerollType" + rerollType.ToString())">Single fail</label>
+                        </div>
+                        }
+                </InputRadioGroup>
+            </div>
+            @if (Attack.WoundReroll?.RerollType == DataModels.RerollType.SpecificValue)
+            {
+                <div class="col-4 me-3 form-check form-switch">
+                    <label for="woundRerollSpecificValueInput" class="form-label">Reroll value</label>
+                    <input type="number" class="form-control" id="woundRerollSpecificValueInput" @bind="Attack.WoundReroll.Value">
+                </div>
+            }
+        }
+    </div>
+</div>
+
+@code {
+}

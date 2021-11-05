@@ -1,0 +1,15 @@
+﻿@page "/roll"
+
+@using DiceRoll.ViewModels
+@inherits RollBase
+
+<h1 class="mb-3">Roll</h1>
+@foreach (var attack in Roll.AttacksList)
+{
+    <Attack Attack="attack"></Attack>
+}
+
+<div class="mb-3">
+    <button class="btn btn-primary me-3" @onclick="AddAttack">Add attack profile</button>
+    <button class="btn btn-primary me-3">Roll!</button>
+</div>

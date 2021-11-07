@@ -1,4 +1,5 @@
-﻿using DiceRoll.DataModels;
+﻿using DiceRoll.BLL;
+using DiceRoll.DataModels;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
@@ -7,25 +8,29 @@ using System.Threading.Tasks;
 
 namespace DiceRoll.ViewModels
 {
-    public class RollBase : ComponentBase
+    public class RollBase : Base
     {
 
         public Roll Roll { get; set; }
 
-        protected override Task OnInitializedAsync()
-        {
-            InitializeRoll();
-            return base.OnInitializedAsync();
-        }
-
-        private void InitializeRoll()
+        protected override void Initialize()
         {
             Roll = new Roll();
         }
 
         public void AddAttack()
         {
-            Roll.AddAttack();
+            Roll.AddAttacker();
+        }
+
+        public void AddSave()
+        {
+            Roll.AddDefender();
+        }
+
+        public void HandleValidSubmit()
+        {
+            Roll.CalculateRoll();
         }
 
     }

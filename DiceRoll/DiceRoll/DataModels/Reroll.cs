@@ -8,9 +8,9 @@ namespace DiceRoll.DataModels
     public class Reroll
     {
 
-        public RerollType RerollType { get; set; }
+        public RerollType? RerollType { get; set; }
 
-        public int? Value { get; set; }
+        public int Value { get; set; } = 1;
 
     }
 }

@@ -1,0 +1,106 @@
+﻿@using DiceRoll.ViewModels
+@inherits AttackerBase
+
+<div class="border border-dark rounded mb-3 p-3">
+    <div class="row mb-3">
+        <label for="quantity" class="col-sm-3 col-form-label">Quantity</label>
+        <div class="col-sm-9">
+            <InputNumber class="form-control" id="quantityInput" @bind-Value="Attacker.Quantity" />
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="attackSkillInput" class="col-sm-3 col-form-label">WS or BS</label>
+        <div class="col-sm-9">
+            <InputNumber class="form-control" id="attackSkillInput" @bind-Value="Attacker.AttackSkill" />
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-3">
+            <div class="form-check form-switch">
+                <InputCheckbox class="form-check-input" role="switch" id="hitRerollInput" @bind-Value="Attacker.HasHitReroll" />
+                <label class="form-check-label" for="hitRerollInput">Hit reroll</label>
+            </div>
+        </div>
+        @if (Attacker.HasHitReroll)
+        {
+            <div class="col-9">
+                <InputRadioGroup Name="HitRerollType" @bind-Value="Attacker.HitReroll.RerollType">
+                    @foreach (var rerollType in (DataModels.RerollType[])Enum.GetValues(typeof(DataModels.RerollType)))
+                        {
+                        <div class="form-check">
+                            <InputRadio Name="HitRerollType" Value="rerollType" class="form-check-input" id="@("HitRerollType" + rerollType.ToString())" />
+                            <label class="form-check-label" for="@("HitRerollType" + rerollType.ToString())">@RerollTypeDisplayNamesDictionary[rerollType]</label>
+                        </div>
+                        }
+                </InputRadioGroup>
+                @if (Attacker.HitReroll?.RerollType == DataModels.RerollType.SpecificValue)
+                {
+                    <InputNumber class="form-control" id="hitRerollSpecificValueInput" @bind-Value="Attacker.HitReroll.Value" placeholder="Specific value" />
+                }
+            </div>
+        }
+    </div>
+    @if (Attacker.HitResult != null)
+    {
+        <div class="row mb-3">
+            <div class="col-12">
+                <p class="text-info bg-dark rounded">@Attacker.HitResult.ToString()</p>
+            </div>
+        </div>
+    }
+    <div class="row mb-3">
+        <label for="woundCapInput" class="col-sm-3 col-form-label">Wound cap</label>
+        <div class="col-sm-9">
+            <InputNumber class="form-control" id="woundCapInput" @bind-Value="Attacker.WoundCap" />
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-3">
+            <div class="form-check form-switch">
+                <InputCheckbox class="form-check-input" role="switch" id="woundRerollInput" @bind-Value="Attacker.HasWoundReroll" />
+                <label class="form-check-label" for="woundRerollInput">Wound reroll</label>
+            </div>
+        </div>
+        @if (Attacker.HasWoundReroll)
+        {
+            <div class="col-9">
+                <InputRadioGroup Name="WoundRerollType" @bind-Value="Attacker.WoundReroll.RerollType">
+                    @foreach (var rerollType in (DataModels.RerollType[])Enum.GetValues(typeof(DataModels.RerollType)))
+                        {
+                        <div class="form-check">
+                            <InputRadio Name="WoundRerollType" Value="rerollType" class="form-check-input" id="@("WoundRerollType" + rerollType.ToString())" />
+                            <label class="form-check-label" for="@("WoundRerollType" + rerollType.ToString())">@RerollTypeDisplayNamesDictionary[rerollType]</label>
+                        </div>
+                        }
+                </InputRadioGroup>
+                @if (Attacker.WoundReroll?.RerollType == DataModels.RerollType.SpecificValue)
+                {
+                    <InputNumber class="form-control" id="woundRerollSpecificValueInput" @bind-Value="Attacker.WoundReroll.Value" placeholder="Specific value" />
+                }
+            </div>
+        }
+    </div>
+    @if (Attacker.WoundResult != null)
+    {
+        <div class="row mb-3">
+            <div class="col-12">
+                <p class="text-info bg-dark rounded">@Attacker.WoundResult.ToString()</p>
+            </div>
+        </div>
+    }
+    <div class="row mb-3">
+        <label for="apInput" class="col-sm-3 col-form-label">AP</label>
+        <div class="col-sm-9">
+            <InputNumber class="form-control" id="apInput" @bind-Value="Attacker.AP" />
+        </div>
+    </div>
+    <div class="row">
+        <label for="damagesInput" class="col-sm-3 col-form-label">Damages</label>
+        <div class="col-sm-9">
+            <InputNumber class="form-control" id="damagesInput" @bind-Value="Attacker.Damages" />
+        </div>
+    </div>
+</div>
+
+@code {
+}

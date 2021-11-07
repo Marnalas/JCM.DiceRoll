@@ -3,13 +3,39 @@
 @using DiceRoll.ViewModels
 @inherits RollBase
 
-<h1 class="mb-3">Roll</h1>
-@foreach (var attack in Roll.AttacksList)
-{
-    <Attack Attack="attack"></Attack>
-}
+<EditForm Model="@Roll" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="mb-3 row">
+        <div class="col-12 d-flex">
+            <h1 class="me-3">Roll</h1>
+            <button class="btn btn-primary ms-auto" type="submit">Roll !</button>
+        </div>
+    </div>
 
-<div class="mb-3">
-    <button class="btn btn-primary me-3" @onclick="AddAttack">Add attack profile</button>
-    <button class="btn btn-primary me-3">Roll!</button>
-</div>
+    <div class="row">
+        <div class="col-md-6">
+            <h3 class="mb-3">Attackers</h3>
+            @foreach (var attacker in Roll.AttackersList)
+            {
+                <Attacker Attacker="attacker"></Attacker>
+            }
+
+            <div class="mb-3">
+                <button class="btn btn-primary me-3" @onclick="AddAttack">Add attack profile</button>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <h3 class="mb-3">Defenders</h3>
+            @foreach (var defender in Roll.DefendersList)
+            {
+                <Defender Defender="defender"></Defender>
+            }
+
+            <div class="mb-3">
+                <button class="btn btn-primary me-3" @onclick="AddSave">Add defender profile</button>
+            </div>
+        </div>
+    </div>
+</EditForm>

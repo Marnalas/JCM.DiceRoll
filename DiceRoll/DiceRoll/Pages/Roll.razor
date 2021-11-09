@@ -8,34 +8,42 @@
     <ValidationSummary />
     <div class="mb-3 row">
         <div class="col-12 d-flex">
-            <h1 class="me-3">Roll</h1>
-            <button class="btn btn-primary ms-auto" type="submit">Roll !</button>
+            <h1 class="text-button-align">Roll</h1>
+            <button class="btn btn-primary ms-auto" type="submit">
+                <span class="fa fa-dice me-2" aria-hidden="true"></span>Roll !
+            </button>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-6">
-            <h3 class="mb-3">Attackers</h3>
+            <div class="mb-3 row">
+                <div class="col-12 d-flex">
+                    <h3 class="me-3">Attackers</h3>
+                    <button class="btn btn-primary ms-auto" type="button" @onclick="AddAttacker">
+                        <span class="fa fa-plus me-2" aria-hidden="true"></span>Add attacker profile
+                    </button>
+                </div>
+            </div>
             @foreach (var attacker in Roll.AttackersList)
             {
                 <Attacker Attacker="attacker"></Attacker>
             }
-
-            <div class="mb-3">
-                <button class="btn btn-primary me-3" @onclick="AddAttack">Add attack profile</button>
-            </div>
         </div>
 
         <div class="col-md-6">
-            <h3 class="mb-3">Defenders</h3>
+            <div class="mb-3 row">
+                <div class="col-12 d-flex">
+                    <h3 class="me-3">Defenders</h3>
+                    <button class="btn btn-primary ms-auto" type="button" @onclick="AddDefender">
+                        <span class="fa fa-plus me-2" aria-hidden="true"></span>Add defender profile
+                    </button>
+                </div>
+            </div>
             @foreach (var defender in Roll.DefendersList)
             {
                 <Defender Defender="defender"></Defender>
             }
-
-            <div class="mb-3">
-                <button class="btn btn-primary me-3" @onclick="AddSave">Add defender profile</button>
-            </div>
         </div>
     </div>
 </EditForm>

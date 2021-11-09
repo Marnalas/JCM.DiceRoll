@@ -1,71 +1,116 @@
 ﻿@using DiceRoll.ViewModels
 @inherits DefenderBase
 
-<div class="border border-dark rounded mb-3 p-3">
-    <div class="row mb-3">
-        <label for="quantity" class="col-sm-3 col-form-label">Quantity</label>
-        <div class="col-sm-9">
-            <InputNumber class="form-control" id="quantityInput" @bind-Value="Defender.Quantity" />
-        </div>
-    </div>
-    <div class="row mb-3">
-        <label for="woundsInput" class="col-sm-3 col-form-label">Wounds</label>
-        <div class="col-sm-9">
-            <InputNumber class="form-control" id="woundsInput" @bind-Value="Defender.Wounds" />
-        </div>
-    </div>
-    <div class="row mb-3">
-        <label for="saveCapInput" class="col-sm-3 col-form-label">Save cap</label>
-        <div class="col-sm-9">
-            <InputNumber class="form-control" id="saveCapInput" @bind-Value="Defender.SaveCap" />
-        </div>
-    </div>
-    <div class="row mb-3">
-        <label for="invlSaveCapInput" class="col-sm-3 col-form-label">Invuln. save cap</label>
-        <div class="col-sm-9">
-            <InputNumber class="form-control" id="invlSaveCapInput" @bind-Value="Defender.InvlSaveCap" />
-        </div>
-    </div>
-    <div class="row mb-3">
-        <div class="col-3">
-            <div class="form-check form-switch">
-                <InputCheckbox class="form-check-input" role="switch" id="saveRerollInput" @bind-Value="Defender.HasSaveReroll" />
-                <label class="form-check-label" for="saveRerollInput">Save reroll</label>
+<div class="card mb-3">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-12 d-flex">
+                <span class="text-button-align">
+                    Defender profile @Defender.Order
+                </span>
+                <div class="btn-group ms-auto" role="group" aria-label="Actions">
+                    <button class="btn btn-primary" type="button">
+                        <span class="fa fa-arrow-up" aria-hidden="true"></span>
+                    </button>
+                    <button class="btn btn-primary" type="button">
+                        <span class="fa fa-arrow-down" aria-hidden="true"></span>
+                    </button>
+                    <button class="btn btn-primary" type="button">
+                        <span class="fa fa-copy" aria-hidden="true"></span>
+                    </button>
+                    <button class="btn btn-primary" type="button">
+                        <span class="fa fa-trash-alt" aria-hidden="true"></span>
+                    </button>
+                </div>
             </div>
         </div>
-        @if (Defender.HasSaveReroll)
+    </div>
+    <ul class="list-group list-group-flush">
+        @if (Defender.SavesResult != null)
         {
-            <div class="col-9">
-                <InputRadioGroup Name="SaveRerollType" @bind-Value="Defender.SaveReroll.RerollType">
-                    @foreach (var rerollType in (DataModels.RerollType[])Enum.GetValues(typeof(DataModels.RerollType)))
-                        {
-                        <div class="form-check">
-                            <InputRadio Name="SaveRerollType" Value="rerollType" class="form-check-input" id="@("SaveRerollType" + rerollType.ToString())" />
-                            <label class="form-check-label" for="@("SaveRerollType" + rerollType.ToString())">@RerollTypeDisplayNamesDictionary[rerollType]</label>
-                        </div>
-                        }
-                </InputRadioGroup>
-                @if (Defender.SaveReroll?.RerollType == DataModels.RerollType.SpecificValue)
-                {
-                    <InputNumber class="form-control" id="saveRerollSpecificValueInput" @bind-Value="Defender.SaveReroll.Value" placeholder="Specific value" />
-                }
-            </div>
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-12">
+                        <p class="mb-0 text-info bg-dark rounded">@Defender.SavesResult.ToString()</p>
+                    </div>
+                </div>
+            </li>
         }
-    </div>
-    @if (Defender.SavesResult != null)
-    {
-        <div class="row mb-3">
-            <div class="col-12">
-                <p class="text-info bg-dark rounded">@Defender.SavesResult.ToString()</p>
+        <li class="list-group-item pb-0">
+            <div class="row">
+                <label for="@("quantityInput" + ComponentId)" class="col-4 col-sm-3 col-form-label">Quantity</label>
+                <div class="col-8 col-8 col-sm-3 pb-2">
+                    <InputNumber class="form-control" id="@("quantityInput" + ComponentId)" @bind-Value="Defender.Quantity" />
+                </div>
+                <label for="@("woundsInput" + ComponentId)" class="col-4 col-sm-3 col-form-label">Wounds</label>
+                <div class="col-8 col-8 col-sm-3 pb-2">
+                    <InputNumber class="form-control" id="@("woundsInput" + ComponentId)" @bind-Value="Defender.Wounds" />
+                </div>
             </div>
-        </div>
-    }
-    <div class="row">
-        <label for="fnpCapInput" class="col-sm-3 col-form-label">Feel no pain cap</label>
-        <div class="col-sm-9">
-            <InputNumber class="form-control" id="fnpCapInput" @bind-Value="Defender.FeelNoPainCap" />
-        </div>
-    </div>
+            <div class="row">
+                <label for="@("saveCapInput" + ComponentId)" class="col-4 col-sm-3 col-form-label">Save cap</label>
+                <div class="col-8 col-8 col-sm-3 pb-2">
+                    <InputNumber class="form-control" id="@("saveCapInput" + ComponentId)" @bind-Value="Defender.SaveCap" />
+                </div>
+                <label for="@("invlSaveCapInput" + ComponentId)" class="col-4 col-sm-3 col-form-label">Invuln. save cap</label>
+                <div class="col-8 col-8 col-sm-3 pb-2">
+                    <InputNumber class="form-control" id="@("invlSaveCapInput" + ComponentId)" @bind-Value="Defender.InvlSaveCap" />
+                </div>
+            </div>
+            <div class="row">
+                <label for="@("fnpCapInput" + ComponentId)" class="col-4 col-sm-3 col-form-label">Feel no pain cap</label>
+                <div class="col-8 col-8 col-sm-3 pb-2">
+                    <InputNumber class="form-control" id="@("fnpCapInput" + ComponentId)" @bind-Value="Defender.FeelNoPainCap" />
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <button class="col-12 btn" type="button" data-bs-toggle="collapse" data-bs-target="@("#optionsCollapse" + ComponentId)" aria-expanded="false" aria-controls="@("optionsCollapse" + ComponentId)">
+                <span class="fa fa-arrow-alt-circle-down" aria-hidden="true"></span> Options
+            </button>
+            <div class="collapse" id="@("optionsCollapse" + ComponentId)">
+                <div class="row">
+                    <div class="col-12 col-sm-8">
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="form-check form-switch">
+                                    <InputCheckbox class="form-check-input" role="switch" id="@("saveRerollInput" + ComponentId)" @bind-Value="Defender.HasSaveReroll" />
+                                    <label class="form-check-label" for="@("saveRerollInput" + ComponentId)">Save reroll</label>
+                                </div>
+                            </div>
+                            @if (Defender.HasSaveReroll)
+                            {
+                                <div class="col-9">
+                                    <InputRadioGroup Name="@("SaveRerollType" + ComponentId)" @bind-Value="Defender.SaveReroll.RerollType">
+                                        @foreach (var rerollType in (DataModels.RerollType[])Enum.GetValues(typeof(DataModels.RerollType)))
+                                        {
+                                        <div class="form-check">
+                                            <InputRadio Name="@("SaveRerollType" + ComponentId)" Value="rerollType" class="form-check-input" id="@("SaveRerollType" + rerollType.ToString() + ComponentId)" />
+                                            <label class="form-check-label" for="@("SaveRerollType" + rerollType.ToString() + ComponentId)">@RerollTypeDisplayNamesDictionary[rerollType]</label>
+                                        </div>
+                                        }
+                                </InputRadioGroup>
+                                @if (Defender.SaveReroll?.RerollType == DataModels.RerollType.SpecificValue)
+                                    {
+                                        <InputNumber class="form-control" id="@("saveRerollSpecificValueInput" + ComponentId)" @bind-Value="Defender.SaveReroll.Value" placeholder="Specific value" />
+                                    }
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-4">
+                        @foreach (var optionType in (DataModels.DefenderOptionType[])Enum.GetValues(typeof(DataModels.DefenderOptionType)))
+                        {
+                            <div class="form-check form-switch">
+                                <InputCheckbox class="form-check-input" role="switch" id="@("optionType" + optionType.ToString() + ComponentId)" @bind-Value="Defender.OptionsDictionary[optionType].IsActive" />
+                                <label class="form-check-label" for="@("optionType" + optionType.ToString() + ComponentId)">@DefenderOptionTypeDisplayNamesDictionary[optionType]</label>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
 </div>
 
 @code {

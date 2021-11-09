@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DiceRoll.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,6 +23,9 @@ namespace DiceRoll.DataModels
         public bool HasFeelNoPain { get => FeelNoPainCap != null; set => FeelNoPainCap = value ? 6 : null; }
 
         public int? FeelNoPainCap { get; set; }
+
+        public Dictionary<DefenderOptionType, Option<DefenderOptionType>> OptionsDictionary { get; set; }
+            = EnumExtensions.GetEnumDictionary<DefenderOptionType>();
 
         public int Order { get; set; }
 

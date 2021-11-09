@@ -9,6 +9,7 @@ namespace DiceRoll.ViewModels
 {
     public class DefenderBase : Base
     {
+
         [Parameter]
         public Defender Defender { get; set; }
 

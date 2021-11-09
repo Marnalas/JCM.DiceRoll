@@ -18,12 +18,12 @@ namespace DiceRoll.ViewModels
             Roll = new Roll();
         }
 
-        public void AddAttack()
+        public void AddAttacker()
         {
             Roll.AddAttacker();
         }
 
-        public void AddSave()
+        public void AddDefender()
         {
             Roll.AddDefender();
         }

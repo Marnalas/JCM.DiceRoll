@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using DiceRoll.Extensions;
+using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,9 @@ namespace DiceRoll.DataModels
 
         public int Damages { get; set; }
 
+        public Dictionary<AttackerOptionType, Option<AttackerOptionType>> OptionsDictionary { get; set; }
+            = EnumExtensions.GetEnumDictionary<AttackerOptionType>();
+
         public int Order { get; set; }
 
         public Result HitResult { get; set; }
@@ -34,6 +38,8 @@ namespace DiceRoll.DataModels
         public Result WoundResult { get; set; }
 
         public double TotalDamages { get => WoundResult.Totals * Damages; }
+
+
 
     }
 }

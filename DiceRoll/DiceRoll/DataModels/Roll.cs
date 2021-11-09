@@ -9,15 +9,11 @@ namespace DiceRoll.DataModels
     {
 
         public IEnumerable<Attacker> AttackersList { get; set; }
+            = new List<Attacker> { new Attacker { Order = 1 } };
         public IEnumerable<Defender> DefendersList { get; set; }
+            = new List<Defender> { new Defender { Order = 1 } };
 
         public int? Margin { get; set; }
-
-        public Roll()
-        {
-            AttackersList = new List<Attacker> { new Attacker { Order = 1 } };
-            DefendersList = new List<Defender> { new Defender { Order = 1 } };
-        }
 
         public void AddAttacker()
         {

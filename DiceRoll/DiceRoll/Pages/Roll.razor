@@ -20,14 +20,18 @@
             <div class="mb-3 row">
                 <div class="col-12 d-flex">
                     <h3 class="me-3">Attackers</h3>
-                    <button class="btn btn-primary ms-auto" type="button" @onclick="AddAttacker">
+                    <button class="btn btn-primary ms-auto" type="button" @onclick="AddAttacker_Click">
                         <span class="fa fa-plus me-2" aria-hidden="true"></span>Add attacker profile
                     </button>
                 </div>
             </div>
-            @foreach (var attacker in Roll.AttackersList)
+            @foreach (var attacker in Roll.AttackersCollection)
             {
-                <Attacker Attacker="attacker"></Attacker>
+                <Attacker Attacker="attacker"
+                    OnListDetailMovedUp="AttackerMovedUp"
+                    OnListDetailMovedDown="AttackerMovedDown"
+                    OnListDetailDuplicated="AttackerDuplicated"
+                    OnListDetailDeleted="AttackerDeleted"></Attacker>
             }
         </div>
 
@@ -35,14 +39,18 @@
             <div class="mb-3 row">
                 <div class="col-12 d-flex">
                     <h3 class="me-3">Defenders</h3>
-                    <button class="btn btn-primary ms-auto" type="button" @onclick="AddDefender">
+                    <button class="btn btn-primary ms-auto" type="button" @onclick="AddDefender_Click">
                         <span class="fa fa-plus me-2" aria-hidden="true"></span>Add defender profile
                     </button>
                 </div>
             </div>
-            @foreach (var defender in Roll.DefendersList)
+            @foreach (var defender in Roll.DefendersCollection)
             {
-                <Defender Defender="defender"></Defender>
+                <Defender Defender="defender"
+                    OnListDetailMovedUp="DefenderMovedUp"
+                    OnListDetailMovedDown="DefenderMovedDown"
+                    OnListDetailDuplicated="DefenderDuplicated"
+                    OnListDetailDeleted="DefenderDeleted"></Defender>
             }
         </div>
     </div>

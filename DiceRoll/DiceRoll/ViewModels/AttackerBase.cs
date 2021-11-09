@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace DiceRoll.ViewModels
 {
-    public class AttackerBase : Base
+    public class AttackerBase : ListDetailBase<Attacker>
     {
-        [Parameter]
-        public Attacker Attacker { get; set; }
+
 
     }
 }

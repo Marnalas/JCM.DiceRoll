@@ -7,11 +7,8 @@ using System.Threading.Tasks;
 
 namespace DiceRoll.ViewModels
 {
-    public class DefenderBase : Base
+    public class DefenderBase : ListDetailBase<Defender>
     {
-
-        [Parameter]
-        public Defender Defender { get; set; }
 
     }
 }

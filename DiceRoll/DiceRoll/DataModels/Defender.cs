@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DiceRoll.DataModels
 {
-    public class Defender
+    public class Defender : IOrderable
     {
         public int Quantity { get; set; }
 

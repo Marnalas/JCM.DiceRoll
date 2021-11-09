@@ -6,19 +6,19 @@
         <div class="row">
             <div class="col-12 d-flex">
                 <span class="text-button-align">
-                    Attacker profile @Attacker.Order
+                    Attacker profile @ListDetail.Order
                 </span>
                 <div class="btn-group ms-auto" role="group" aria-label="Basic example">
-                    <button class="btn btn-primary" type="button">
+                    <button class="btn btn-primary" type="button" @onclick="MoveUp_Click">
                         <span class="fa fa-arrow-up" aria-hidden="true"></span>
                     </button>
-                    <button class="btn btn-primary" type="button">
+                    <button class="btn btn-primary" type="button" @onclick="MoveDown_Click">
                         <span class="fa fa-arrow-down" aria-hidden="true"></span>
                     </button>
-                    <button class="btn btn-primary" type="button">
+                    <button class="btn btn-primary" type="button" @onclick="Duplicate_Click">
                         <span class="fa fa-copy" aria-hidden="true"></span>
                     </button>
-                    <button class="btn btn-primary" type="button">
+                    <button class="btn btn-primary" type="button" @onclick="Delete_Click">
                         <span class="fa fa-trash-alt" aria-hidden="true"></span>
                     </button>
                 </div>
@@ -26,17 +26,17 @@
         </div>
     </div>
     <ul class="list-group list-group-flush">
-        @if (Attacker.HitResult != null || Attacker.WoundResult != null)
+        @if (ListDetail.HitResult != null || ListDetail.WoundResult != null)
         {
             <li class="list-group-item">
                 <div class="row">
                     <div class="col-12">
-                        <p class="mb-2 text-info bg-dark rounded">@Attacker.HitResult.ToString()</p>
+                        <p class="mb-2 text-info bg-dark rounded">@ListDetail.HitResult.ToString()</p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-12">
-                        <p class="mb-0 text-info bg-dark rounded">@Attacker.WoundResult.ToString()</p>
+                        <p class="mb-0 text-info bg-dark rounded">@ListDetail.WoundResult.ToString()</p>
                     </div>
                 </div>
             </li>
@@ -45,27 +45,27 @@
             <div class="row">
                 <label for="@("quantityInput" + ComponentId)" class="col-4 col-sm-3 col-form-label">Quantity</label>
                 <div class="col-8 col-8 col-sm-3 pb-2">
-                    <InputNumber class="form-control" id="@("quantityInput" + ComponentId)" @bind-Value="Attacker.Quantity" />
+                    <InputNumber class="form-control" id="@("quantityInput" + ComponentId)" @bind-Value="ListDetail.Quantity" />
                 </div>
             </div>
             <div class="row">
                 <label for="@("attackSkillInput" + ComponentId)" class="col-4 col-sm-3 col-form-label">WS or BS</label>
                 <div class="col-8 col-sm-3 pb-2">
-                    <InputNumber class="form-control" id="@("attackSkillInput" + ComponentId)" @bind-Value="Attacker.AttackSkill" />
+                    <InputNumber class="form-control" id="@("attackSkillInput" + ComponentId)" @bind-Value="ListDetail.AttackSkill" />
                 </div>
                 <label for="@("woundCapInput" + ComponentId)" class="col-4 col-sm-3 col-form-label">Wound cap</label>
                 <div class="col-8 col-sm-3 pb-2">
-                    <InputNumber class="form-control" id="@("woundCapInput" + ComponentId)" @bind-Value="Attacker.WoundCap" />
+                    <InputNumber class="form-control" id="@("woundCapInput" + ComponentId)" @bind-Value="ListDetail.WoundCap" />
                 </div>
             </div>
             <div class="row">
                 <label for="@("apInput" + ComponentId)" class="col-4 col-sm-3 col-form-label">AP</label>
                 <div class="col-8 col-sm-3 pb-2">
-                    <InputNumber class="form-control" id="@("apInput" + ComponentId)" @bind-Value="Attacker.AP" />
+                    <InputNumber class="form-control" id="@("apInput" + ComponentId)" @bind-Value="ListDetail.AP" />
                 </div>
                 <label for="@("damagesInput" + ComponentId)" class="col-4 col-sm-3 col-form-label">Damages</label>
                 <div class="col-8 col-sm-3 pb-2">
-                    <InputNumber class="form-control" id="@("damagesInput" + ComponentId)" @bind-Value="Attacker.Damages" />
+                    <InputNumber class="form-control" id="@("damagesInput" + ComponentId)" @bind-Value="ListDetail.Damages" />
                 </div>
             </div>
         </li>
@@ -79,14 +79,14 @@
                         <div class="row">
                             <div class="col-3">
                                 <div class="form-check form-switch">
-                                    <InputCheckbox class="form-check-input" role="switch" id="@("hitRerollInput" + ComponentId)" @bind-Value="Attacker.HasHitReroll" />
+                                    <InputCheckbox class="form-check-input" role="switch" id="@("hitRerollInput" + ComponentId)" @bind-Value="ListDetail.HasHitReroll" />
                                     <label class="form-check-label" for="@("hitRerollInput" + ComponentId)">Hit reroll</label>
                                 </div>
                             </div>
-                            @if (Attacker.HasHitReroll)
+                            @if (ListDetail.HasHitReroll)
                             {
                                 <div class="col-9 pb-2">
-                                    <InputRadioGroup Name="@("HitRerollType" + ComponentId)" @bind-Value="Attacker.HitReroll.RerollType">
+                                    <InputRadioGroup Name="@("HitRerollType" + ComponentId)" @bind-Value="ListDetail.HitReroll.RerollType">
                                         @foreach (var rerollType in (DataModels.RerollType[])Enum.GetValues(typeof(DataModels.RerollType)))
                                         {
                                         <div class="form-check">
@@ -95,9 +95,9 @@
                                         </div>
                                         }
                                 </InputRadioGroup>
-                                @if (Attacker.HitReroll?.RerollType == DataModels.RerollType.SpecificValue)
+                                @if (ListDetail.HitReroll?.RerollType == DataModels.RerollType.SpecificValue)
                                     {
-                                        <InputNumber class="form-control" id="@("hitRerollSpecificValueInput" + ComponentId)" @bind-Value="Attacker.HitReroll.Value" placeholder="Specific value" />
+                                        <InputNumber class="form-control" id="@("hitRerollSpecificValueInput" + ComponentId)" @bind-Value="ListDetail.HitReroll.Value" placeholder="Specific value" />
                                     }
                                 </div>
                             }
@@ -105,14 +105,14 @@
                         <div class="row">
                             <div class="col-3">
                                 <div class="form-check form-switch">
-                                    <InputCheckbox class="form-check-input" role="switch" id="@("woundRerollInput" + ComponentId)" @bind-Value="Attacker.HasWoundReroll" />
+                                    <InputCheckbox class="form-check-input" role="switch" id="@("woundRerollInput" + ComponentId)" @bind-Value="ListDetail.HasWoundReroll" />
                                     <label class="form-check-label" for="@("woundRerollInput" + ComponentId)">Wound reroll</label>
                                 </div>
                             </div>
-                            @if (Attacker.HasWoundReroll)
+                            @if (ListDetail.HasWoundReroll)
                             {
                                 <div class="col-9 pb-2">
-                                    <InputRadioGroup Name="@("WoundRerollType" + ComponentId)" @bind-Value="Attacker.WoundReroll.RerollType">
+                                    <InputRadioGroup Name="@("WoundRerollType" + ComponentId)" @bind-Value="ListDetail.WoundReroll.RerollType">
                                         @foreach (var rerollType in (DataModels.RerollType[])Enum.GetValues(typeof(DataModels.RerollType)))
                                         {
                                         <div class="form-check">
@@ -121,9 +121,9 @@
                                         </div>
                                         }
                                 </InputRadioGroup>
-                                @if (Attacker.WoundReroll?.RerollType == DataModels.RerollType.SpecificValue)
+                                @if (ListDetail.WoundReroll?.RerollType == DataModels.RerollType.SpecificValue)
                                     {
-                                        <InputNumber class="form-control" id="@("woundRerollSpecificValueInput" + ComponentId)" @bind-Value="Attacker.WoundReroll.Value" placeholder="Specific value" />
+                                        <InputNumber class="form-control" id="@("woundRerollSpecificValueInput" + ComponentId)" @bind-Value="ListDetail.WoundReroll.Value" placeholder="Specific value" />
                                     }
                                 </div>
                             }
@@ -133,7 +133,7 @@
                         @foreach (var optionType in (DataModels.AttackerOptionType[])Enum.GetValues(typeof(DataModels.AttackerOptionType)))
                         {
                             <div class="form-check form-switch">
-                                <InputCheckbox class="form-check-input" role="switch" id="@("optionType" + optionType.ToString() + ComponentId)" @bind-Value="Attacker.OptionsDictionary[optionType].IsActive" />
+                                <InputCheckbox class="form-check-input" role="switch" id="@("optionType" + optionType.ToString() + ComponentId)" @bind-Value="ListDetail.OptionsDictionary[optionType].IsActive" />
                                 <label class="form-check-label" for="@("optionType" + optionType.ToString() + ComponentId)">@AttackerOptionTypeDisplayNamesDictionary[optionType]</label>
                             </div>
                         }

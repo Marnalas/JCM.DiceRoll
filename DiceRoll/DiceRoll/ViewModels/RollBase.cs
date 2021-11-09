@@ -18,17 +18,57 @@ namespace DiceRoll.ViewModels
             Roll = new Roll();
         }
 
-        public void AddAttacker()
+        protected async Task AddAttacker_Click()
         {
             Roll.AddAttacker();
         }
 
-        public void AddDefender()
+        protected async Task AddDefender_Click()
         {
             Roll.AddDefender();
         }
 
-        public void HandleValidSubmit()
+        protected async Task AttackerMovedUp(int order)
+        {
+            Roll.MoveUpAttacker(order);
+        }
+
+        protected async Task DefenderMovedUp(int order)
+        {
+            Roll.MoveUpDefender(order);
+        }
+
+        protected async Task AttackerMovedDown(int order)
+        {
+            Roll.MoveDownAttacker(order);
+        }
+
+        protected async Task DefenderMovedDown(int order)
+        {
+            Roll.MoveDownDefender(order);
+        }
+
+        protected async Task AttackerDuplicated(int order)
+        {
+            Roll.DuplicateAttacker(order);
+        }
+
+        protected async Task DefenderDuplicated(int order)
+        {
+            Roll.DuplicateDefender(order);
+        }
+
+        protected async Task AttackerDeleted(int order)
+        {
+            Roll.RemoveAttacker(order);
+        }
+
+        protected async Task DefenderDeleted(int order)
+        {
+            Roll.RemoveDefender(order);
+        }
+
+        protected async Task HandleValidSubmit()
         {
             Roll.CalculateRoll();
         }

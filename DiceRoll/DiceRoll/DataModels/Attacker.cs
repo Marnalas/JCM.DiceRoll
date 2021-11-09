@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace DiceRoll.DataModels
 
 {
-    public class Attacker
+    public class Attacker : IOrderable
     {
         public int Quantity { get; set; }
 
@@ -38,8 +38,6 @@ namespace DiceRoll.DataModels
         public Result WoundResult { get; set; }
 
         public double TotalDamages { get => WoundResult.Totals * Damages; }
-
-
 
     }
 }

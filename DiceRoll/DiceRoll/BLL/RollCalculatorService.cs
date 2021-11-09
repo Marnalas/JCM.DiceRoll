@@ -45,14 +45,14 @@ namespace DiceRoll.BLL
         public static void CalculateRoll(this Roll roll)
         {
             var hasUsedSingleFailReroll = false;
-            foreach (var attacker in roll.AttackersList.OrderBy(a => a.Order))
+            foreach (var attacker in roll.AttackersCollection.OrderBy(a => a.Order))
             {
                 attacker.HitResult = calculateStep(attacker.Quantity, attacker.AttackSkill, attacker.HasHitReroll, attacker.HitReroll, ref hasUsedSingleFailReroll);
                 attacker.WoundResult = calculateStep(attacker.HitResult.Totals, attacker.WoundCap, attacker.HasWoundReroll, attacker.WoundReroll, ref hasUsedSingleFailReroll);
             }
 
             hasUsedSingleFailReroll = false;
-            foreach (var defender in roll.DefendersList.OrderBy(d => d.Order))
+            foreach (var defender in roll.DefendersCollection.OrderBy(d => d.Order))
             {
                 defender.SavesResult = calculateStep(defender.Quantity, defender.SaveCap, defender.HasSaveReroll, defender.SaveReroll, ref hasUsedSingleFailReroll);
                 //if (defender.HasFeelNoPain)

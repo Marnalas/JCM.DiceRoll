@@ -1,4 +1,4 @@
-﻿namespace DiceRoll.DataModels
+﻿namespace DiceRoll.ViewModels
 {
     public interface IOrderable
     {

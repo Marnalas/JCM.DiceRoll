@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace DiceRoll.DataModels
+﻿namespace DiceRoll.Data
 {
     public class Reroll
     {

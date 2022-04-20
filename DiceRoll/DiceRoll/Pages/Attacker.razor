@@ -1,18 +1,20 @@
-﻿@using DiceRoll.ViewModels
+﻿@using DiceRoll.Extensions
+@using DiceRoll.Data
+@using DiceRoll.WorkModels
 @inherits AttackerBase
 
 <div class="card mb-3">
     <div class="card-header">
         <div class="row">
             <div class="col-12 d-flex">
-                <span class="text-button-align">
+                <span class="text-align">
                     Attacker profile @ListDetail.Order
                 </span>
                 <div class="btn-group ms-auto" role="group" aria-label="Basic example">
-                    <button class="btn btn-primary" type="button" @onclick="MoveUp_Click">
+                    <button class="btn btn-primary" type="button" @onclick="MoveUp_Click" disabled="@IsFirst">
                         <span class="fa fa-arrow-up" aria-hidden="true"></span>
                     </button>
-                    <button class="btn btn-primary" type="button" @onclick="MoveDown_Click">
+                    <button class="btn btn-primary" type="button" @onclick="MoveDown_Click" disabled="@IsLast">
                         <span class="fa fa-arrow-down" aria-hidden="true"></span>
                     </button>
                     <button class="btn btn-primary" type="button" @onclick="Duplicate_Click">
@@ -31,12 +33,12 @@
             <li class="list-group-item">
                 <div class="row">
                     <div class="col-12">
-                        <p class="mb-2 text-info bg-dark rounded">@ListDetail.HitResult.ToString()</p>
+                        <p class="mb-2 text-info bg-dark rounded">@ListDetail.HitResult</p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-12">
-                        <p class="mb-0 text-info bg-dark rounded">@ListDetail.WoundResult.ToString()</p>
+                        <p class="mb-0 text-info bg-dark rounded">@ListDetail.WoundResult</p>
                     </div>
                 </div>
             </li>
@@ -75,66 +77,70 @@
             </button>
             <div class="collapse" id="@("optionsCollapse" + ComponentId)">
                 <div class="row">
-                    <div class="col-12 col-sm-8">
+                    <div class="col-12 col-sm-6">
                         <div class="row">
-                            <div class="col-3">
-                                <div class="form-check form-switch">
+                            <div class="col-4">
+                                <div class="form-check form-switch text-align mb-0">
                                     <InputCheckbox class="form-check-input" role="switch" id="@("hitRerollInput" + ComponentId)" @bind-Value="ListDetail.HasHitReroll" />
                                     <label class="form-check-label" for="@("hitRerollInput" + ComponentId)">Hit reroll</label>
                                 </div>
                             </div>
                             @if (ListDetail.HasHitReroll)
                             {
-                                <div class="col-9 pb-2">
-                                    <InputRadioGroup Name="@("HitRerollType" + ComponentId)" @bind-Value="ListDetail.HitReroll.RerollType">
-                                        @foreach (var rerollType in (DataModels.RerollType[])Enum.GetValues(typeof(DataModels.RerollType)))
+                                <div class="col-8 pb-2">
+                                    <InputRadioGroup Name="@("HitRerollType" + ComponentId)" @bind-Value="ListDetail.HitRerollType">
+                                        @foreach (var rerollType in (RerollType[])Enum.GetValues(typeof(RerollType)))
                                         {
-                                        <div class="form-check">
+                                        <div class="form-check text-align mb-0">
                                             <InputRadio Name="@("HitRerollType" + ComponentId)" Value="rerollType" class="form-check-input" id="@("HitRerollType" + rerollType.ToString() + ComponentId)" />
-                                            <label class="form-check-label" for="@("HitRerollType" + rerollType.ToString() + ComponentId)">@RerollTypeDisplayNamesDictionary[rerollType]</label>
+                                            <label class="form-check-label" for="@("HitRerollType" + rerollType.ToString() + ComponentId)">@rerollType.GetDescription()</label>
                                         </div>
                                         }
                                 </InputRadioGroup>
-                                @if (ListDetail.HitReroll?.RerollType == DataModels.RerollType.SpecificValue)
-                                    {
-                                        <InputNumber class="form-control" id="@("hitRerollSpecificValueInput" + ComponentId)" @bind-Value="ListDetail.HitReroll.Value" placeholder="Specific value" />
-                                    }
-                                </div>
+                            </div>
                             }
                         </div>
                         <div class="row">
-                            <div class="col-3">
-                                <div class="form-check form-switch">
+                            <div class="col-4">
+                                <div class="form-check form-switch text-align mb-0">
                                     <InputCheckbox class="form-check-input" role="switch" id="@("woundRerollInput" + ComponentId)" @bind-Value="ListDetail.HasWoundReroll" />
                                     <label class="form-check-label" for="@("woundRerollInput" + ComponentId)">Wound reroll</label>
                                 </div>
                             </div>
                             @if (ListDetail.HasWoundReroll)
                             {
-                                <div class="col-9 pb-2">
-                                    <InputRadioGroup Name="@("WoundRerollType" + ComponentId)" @bind-Value="ListDetail.WoundReroll.RerollType">
-                                        @foreach (var rerollType in (DataModels.RerollType[])Enum.GetValues(typeof(DataModels.RerollType)))
+                                <div class="col-8 pb-2">
+                                    <InputRadioGroup Name="@("WoundRerollType" + ComponentId)" @bind-Value="ListDetail.WoundRerollType">
+                                        @foreach (var rerollType in (RerollType[])Enum.GetValues(typeof(RerollType)))
                                         {
-                                        <div class="form-check">
+                                        <div class="form-check text-align mb-0">
                                             <InputRadio Name="@("WoundRerollType" + ComponentId)" Value="rerollType" class="form-check-input" id="@("WoundRerollType" + rerollType.ToString() + ComponentId)" />
-                                            <label class="form-check-label" for="@("WoundRerollType" + rerollType.ToString() + ComponentId)">@RerollTypeDisplayNamesDictionary[rerollType]</label>
+                                            <label class="form-check-label" for="@("WoundRerollType" + rerollType.ToString() + ComponentId)">@rerollType.GetDescription()</label>
                                         </div>
                                         }
                                 </InputRadioGroup>
-                                @if (ListDetail.WoundReroll?.RerollType == DataModels.RerollType.SpecificValue)
-                                    {
-                                        <InputNumber class="form-control" id="@("woundRerollSpecificValueInput" + ComponentId)" @bind-Value="ListDetail.WoundReroll.Value" placeholder="Specific value" />
-                                    }
-                                </div>
+                            </div>
                             }
                         </div>
                     </div>
-                    <div class="col-12 col-sm-4">
-                        @foreach (var optionType in (DataModels.AttackerOptionType[])Enum.GetValues(typeof(DataModels.AttackerOptionType)))
+                    <div class="col-12 col-sm-6">
+                        @foreach (var optionType in ListDetail.OptionsDictionary)
                         {
-                            <div class="form-check form-switch">
-                                <InputCheckbox class="form-check-input" role="switch" id="@("optionType" + optionType.ToString() + ComponentId)" @bind-Value="ListDetail.OptionsDictionary[optionType].IsActive" />
-                                <label class="form-check-label" for="@("optionType" + optionType.ToString() + ComponentId)">@AttackerOptionTypeDisplayNamesDictionary[optionType]</label>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-check form-switch text-align mb-0">
+                                        <InputCheckbox class="form-check-input" role="switch" id="@("optionType" + optionType.Key.ToString() + ComponentId)" @bind-Value="optionType.Value.IsActive" />
+                                        <label class="form-check-label" for="@("optionType" + optionType.Key.ToString() + ComponentId)">@optionType.Key.GetDescription()</label>
+                                    </div>
+                                </div>
+                                @if (optionType.Value.IsActive)
+                                {
+                                    <div class="col-6">
+                                        <div class="form-check form-switch">
+                                            <InputNumber class="form-control" id="@("optionTypeValue" + optionType.Key.ToString() + ComponentId)" @bind-Value="optionType.Value.Value" />
+                                        </div>
+                                    </div>
+                                }
                             </div>
                         }
                     </div>

@@ -1,6 +1,6 @@
-﻿@page "/roll"
+﻿@using DiceRoll.ViewModels
+@page "/roll"
 
-@using DiceRoll.ViewModels
 @inherits RollBase
 
 <EditForm Model="@Roll" OnValidSubmit="HandleValidSubmit">
@@ -20,18 +20,20 @@
             <div class="mb-3 row">
                 <div class="col-12 d-flex">
                     <h3 class="me-3">Attackers</h3>
-                    <button class="btn btn-primary ms-auto" type="button" @onclick="AddAttacker_Click">
+                    <button class="btn btn-primary ms-auto" type="button" @onclick="@(() => GetAction(EventCallbackTarget.Attacker, EventCallbackAction.Add)(null))">
                         <span class="fa fa-plus me-2" aria-hidden="true"></span>Add attacker profile
                     </button>
                 </div>
             </div>
-            @foreach (var attacker in Roll.AttackersCollection)
+            @foreach (var attacker in Roll.Attackers.OrderBy(a => a.Order))
             {
-                <Attacker Attacker="attacker"
-                    OnListDetailMovedUp="AttackerMovedUp"
-                    OnListDetailMovedDown="AttackerMovedDown"
-                    OnListDetailDuplicated="AttackerDuplicated"
-                    OnListDetailDeleted="AttackerDeleted"></Attacker>
+                <Attacker ListDetail="attacker"
+                    IsFirst=@(attacker.Order == 1)
+                    IsLast=@(attacker.Order == Roll.Attackers.Count)
+                    ListDetailMovedUpAction="@GetAction(EventCallbackTarget.Attacker, EventCallbackAction.MoveUp)"
+                    ListDetailMovedDownAction="@GetAction(EventCallbackTarget.Attacker, EventCallbackAction.MoveDown)"
+                    ListDetailDuplicatedAction="@GetAction(EventCallbackTarget.Attacker, EventCallbackAction.Duplicate)"
+                    ListDetailDeletedAction="@GetAction(EventCallbackTarget.Attacker, EventCallbackAction.Delete)"></Attacker>
             }
         </div>
 
@@ -39,18 +41,20 @@
             <div class="mb-3 row">
                 <div class="col-12 d-flex">
                     <h3 class="me-3">Defenders</h3>
-                    <button class="btn btn-primary ms-auto" type="button" @onclick="AddDefender_Click">
+                    <button class="btn btn-primary ms-auto" type="button" @onclick="@(() => GetAction(EventCallbackTarget.Defender, EventCallbackAction.Add)(null))">
                         <span class="fa fa-plus me-2" aria-hidden="true"></span>Add defender profile
                     </button>
                 </div>
             </div>
-            @foreach (var defender in Roll.DefendersCollection)
+            @foreach (var defender in Roll.Defenders.OrderBy(d => d.Order))
             {
-                <Defender Defender="defender"
-                    OnListDetailMovedUp="DefenderMovedUp"
-                    OnListDetailMovedDown="DefenderMovedDown"
-                    OnListDetailDuplicated="DefenderDuplicated"
-                    OnListDetailDeleted="DefenderDeleted"></Defender>
+                <Defender ListDetail="defender"
+                    IsFirst=@(defender.Order == 1)
+                    IsLast=@(defender.Order == Roll.Defenders.Count)
+                    ListDetailMovedUpAction="@GetAction(EventCallbackTarget.Defender, EventCallbackAction.MoveUp)"
+                    ListDetailMovedDownAction="@GetAction(EventCallbackTarget.Defender, EventCallbackAction.MoveDown)"
+                    ListDetailDuplicatedAction="@GetAction(EventCallbackTarget.Defender, EventCallbackAction.Duplicate)"
+                    ListDetailDeletedAction="@GetAction(EventCallbackTarget.Defender, EventCallbackAction.Delete)"></Defender>
             }
         </div>
     </div>
